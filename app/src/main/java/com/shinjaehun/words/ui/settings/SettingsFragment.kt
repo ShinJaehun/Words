@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -39,9 +42,9 @@ class SettingsFragment: PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) =
         addPreferencesFromResource(R.xml.preferences)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
@@ -68,6 +71,36 @@ class SettingsFragment: PreferenceFragmentCompat() {
         checkForSigning()
 
     }
+
+    // onActivityCreated() deprecated
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
+//        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+//
+//        mContext = activity?.applicationContext ?: requireContext().applicationContext
+//
+////        mGoogleApiClient = GoogleUtil.getGoogleApiClient(requireActivity())
+////
+////        mGoogleSignInClient = GoogleSignIn.getClient(mContext, gso)
+//
+//        mButton = findPreference("SIGN_IN")!!
+//
+//        mToggle = findPreference("SYNC")!!
+//
+//        mProvider = PreferenceProvider(mContext)
+//
+////        if (FirebaseUtil.uid == null)
+//        checkTurningOff()
+//
+//        mButton.setOnPreferenceClickListener {
+//            setButtonListener()
+//            return@setOnPreferenceClickListener true
+//        }
+//
+//        checkForSigning()
+//
+//    }
 
     private fun setButtonListener(){
         mButton.isEnabled = false

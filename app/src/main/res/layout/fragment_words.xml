@@ -1,31 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.words.WordsFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.words.WordsFragment">
 
+    <TextView
+        android:id="@+id/lbl_toolbar_title"
+        style="@style/ToolbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginLeft="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="사전" />
 
-    <androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
-                                               android:id="@+id/recycler_view"
-                                               android:layout_height="match_parent">
+    <ImageButton
+        android:id="@+id/btn_settings"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="8dp"
+        android:src="@drawable/ic_settings"
+        app:tint="@android:color/black"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:id="@+id/recycler_view"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lbl_toolbar_title">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton android:layout_width="wrap_content"
-                                                                           android:layout_gravity="end|bottom"
-                                                                           android:layout_margin="15dp"
-                                                                           android:src="@drawable/ic_add"
-                                                                           android:id="@+id/button_add_word"
-                                                                           android:layout_height="wrap_content"/>
-    <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:visibility="invisible"
-            android:indeterminate="true"
-            android:layout_marginTop="-5dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar" android:indeterminateTint="@color/blue_grey_300"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_add"
+        android:id="@+id/button_add_word"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-</FrameLayout>
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:visibility="invisible"
+        android:indeterminate="true"
+        android:layout_marginTop="-5dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:indeterminateTint="@color/blue_grey_300"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -50,20 +50,22 @@
                         app:layout_constraintEnd_toStartOf="@+id/guideline" android:layout_marginEnd="8dp"/>
 
                 <ImageButton
-                        style="@style/ImageButtonItem"
-                        app:srcCompat="@drawable/ic_swap_horiz"
-                        android:id="@+id/btn_clap"
-                        app:layout_constraintTop_toTopOf="@id/inner_lyt"
-                        app:layout_constraintEnd_toEndOf="@id/inner_lyt"
-                        app:layout_constraintBottom_toBottomOf="@id/inner_lyt"
-                />
+                    style="@style/ImageButtonItem"
+                    app:srcCompat="@drawable/ic_swap_horiz"
+                    android:id="@+id/btn_clap"
+                    app:tint="@android:color/black"
+                    app:layout_constraintTop_toTopOf="@id/inner_lyt"
+                    app:layout_constraintEnd_toEndOf="@id/inner_lyt"
+                    app:layout_constraintBottom_toBottomOf="@id/inner_lyt" />
 
-                <ImageButton style="@style/ImageButtonItem"
-                             app:srcCompat="@drawable/ic_okay"
-                             android:id="@+id/btn_check"
-                             app:layout_constraintTop_toTopOf="@id/inner_lyt"
-                             app:layout_constraintEnd_toEndOf="@id/inner_lyt"
-                             app:layout_constraintBottom_toBottomOf="@id/inner_lyt"/>
+                <ImageButton
+                    style="@style/ImageButtonItem"
+                    app:srcCompat="@drawable/ic_okay"
+                    android:id="@+id/btn_check"
+                    app:tint="@android:color/black"
+                    app:layout_constraintTop_toTopOf="@id/inner_lyt"
+                    app:layout_constraintEnd_toEndOf="@id/inner_lyt"
+                    app:layout_constraintBottom_toBottomOf="@id/inner_lyt"/>
 
                 <androidx.constraintlayout.widget.Guideline
                         android:orientation="vertical"

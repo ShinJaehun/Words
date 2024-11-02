@@ -28,29 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        // 이것도 소용 없음
-//        toolbar.setOnMenuItemClickListener { menuItem: MenuItem ->
-//            when(menuItem.itemId) {
-//                R.id.action_settings -> {
-//                    Log.i(TAG, "settings?")
-//                    true
-//                }
-//                else -> {
-//                    false
-//                }
-//            }
-//        }
-
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
 
         navContrller = Navigation.findNavController(this, R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navContrller)
     }
 
     override fun onSupportNavigateUp(): Boolean = NavigationUI.navigateUp(navContrller, null)

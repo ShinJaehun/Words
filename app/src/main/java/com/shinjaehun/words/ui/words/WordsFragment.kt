@@ -36,8 +36,6 @@ class WordsFragment : ScopedFragment() {
 
     private lateinit var binding: FragmentWordsBinding
 
-//    private val mViewModelFactory: WordsViewModelFactory by instance()
-    private lateinit var mViewModelFactory: WordsViewModelFactory
     private lateinit var mViewModel: WordsViewModel
     private lateinit var mAdapter: WordsAdapter
     private lateinit var mDialog: AddWordDialog
@@ -48,50 +46,19 @@ class WordsFragment : ScopedFragment() {
     private var actionMode: ActionMode? = null
     var deleteListener: OnCallbackDestroy? = null
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // deprecated
-//        setHasOptionsMenu(true)
-        // 이유를 모르겠는데 menu selected가 작동하지 않아서 settingFragment를 확인할 수 없음...
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.menu_main, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                val options = navOptions {
-                    anim {
-                        enter = R.anim.fade_in
-                        exit = R.anim.fade_out
-                        popEnter = R.anim.fade_in
-                        popExit =R.anim.fade_out
-                    }
-                }
-                when (menuItem.itemId) {
-                    R.id.action_settings -> {
-                        Log.i(TAG, "settings true?")
-                        findNavController().navigate(R.id.settingsFragment, null, options)
-                    }
-                    else -> {
-                        Log.i(TAG, "settings false?")
-                    }
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
         binding = FragmentWordsBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        mViewModel = ViewModelProvider(this, mViewModelFactory).get(WordsViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         mViewModel = ViewModelProvider(
             this,
             WordsInjector(requireActivity().application).provideWordsListViewModelFactory()
@@ -125,7 +92,17 @@ class WordsFragment : ScopedFragment() {
 
         binding.buttonAddWord.setOnClickListener { mDialog.show() }
 
-
+        binding.btnSettings.setOnClickListener {
+            val options = navOptions {
+                anim {
+                    enter = R.anim.fade_in
+                    exit = R.anim.fade_out
+                    popEnter = R.anim.fade_in
+                    popExit = R.anim.fade_out
+                }
+            }
+            findNavController().navigate(R.id.settingsFragment, null, options)
+        }
     }
 
     private fun bindUI() = launch {
@@ -264,31 +241,6 @@ class WordsFragment : ScopedFragment() {
         mItemTouchHelper = ItemTouchHelper(callback)
         mItemTouchHelper.attachToRecyclerView(binding.recyclerView)
     }
-
-    // deprecated
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        inflater.inflate(R.menu.menu_main, menu)
-//    }
-
-
-    // deprecated
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        val options = navOptions {
-//            anim {
-//                enter = R.anim.fade_in
-//                exit = R.anim.fade_out
-//                popEnter = R.anim.fade_in
-//                popExit =R.anim.fade_out
-//            }
-//        }
-//        when (item.itemId) {
-//            R.id.action_settings -> {
-//                findNavController().navigate(R.id.settingsFragment, null, options)
-//                Log.i(TAG, "settings?")
-//            }
-//        }
-//        return true
-//    }
 
     interface OnCallbackDestroy {
         fun destroyCallback()

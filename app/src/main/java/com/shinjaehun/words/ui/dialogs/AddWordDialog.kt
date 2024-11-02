@@ -30,16 +30,16 @@ class AddWordDialog(context: Context) : Dialog(context) {
     private var currentNumber = 0
 
     private val wordsList = mutableListOf(
-        WordEntry("Один", "One"),
-        WordEntry("Два", "Two"),
-        WordEntry("Три", "Three"),
-        WordEntry("Четыре", "Four"),
-        WordEntry("Пять", "Five"),
-        WordEntry("Шесть", "Six"),
-        WordEntry("Семь", "Seven"),
-        WordEntry("Восемь", "Eight"),
-        WordEntry("Девять", "Nine"),
-        WordEntry("Десять", "Ten")
+        WordEntry("하나", "One"),
+        WordEntry("둘", "Two"),
+        WordEntry("셋", "Three"),
+        WordEntry("넷", "Four"),
+        WordEntry("다섯", "Five"),
+        WordEntry("여섯", "Six"),
+        WordEntry("일곱", "Seven"),
+        WordEntry("여덟", "Eight"),
+        WordEntry("아홉", "Nine"),
+        WordEntry("열", "Ten")
     )
 
     override fun show() {

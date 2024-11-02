@@ -19,7 +19,7 @@ class ActionModeCallback (private val act: Activity) : ActionMode.Callback, Word
     private var actionMode: ActionMode? = null
 
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        changeSystemBarColor(android.R.color.black)
+//        changeSystemBarColor(android.R.color.black)
         mode?.menuInflater?.inflate(R.menu.menu_delete,menu)
 
         actionMode = mode
@@ -28,7 +28,7 @@ class ActionModeCallback (private val act: Activity) : ActionMode.Callback, Word
     }
 
     override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
-        //(act as AppCompatActivity).supportActionBar?.hide()
+//        (act as AppCompatActivity).supportActionBar?.hide()
         return false
     }
 
@@ -46,22 +46,23 @@ class ActionModeCallback (private val act: Activity) : ActionMode.Callback, Word
     override fun onDestroyActionMode(mode: ActionMode?) {
         /*adapter.clearSelections()
         actionMode = null*/
-        //(act as AppCompatActivity).supportActionBar?.show()
+//        (act as AppCompatActivity).supportActionBar?.show()
         actionMode = null
         destroyListener?.destroy()
-        changeSystemBarColor(android.R.color.black)
+//        changeSystemBarColor(android.R.color.black)
     }
 
-    private fun changeSystemBarColor(@ColorRes color: Int){
-        (act as? AppCompatActivity)?.supportActionBar
-            ?.setBackgroundDrawable(ColorDrawable(act.resources.getColor(color)))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = act.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.statusBarColor = act.resources.getColor(color)
-        }
-    }
+//    private fun changeSystemBarColor(@ColorRes color: Int){
+//        // 이걸 대체 왜 쓰는거야?
+//        (act as? AppCompatActivity)?.supportActionBar
+//            ?.setBackgroundDrawable(ColorDrawable(act.resources.getColor(color)))
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            val window = act.window
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+//            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+//            window.statusBarColor = act.resources.getColor(color)
+//        }
+//    }
 
     inline fun setOnDestroyListener(
         crossinline destroyCallback: ()->Unit = {},
