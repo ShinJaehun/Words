@@ -12,7 +12,7 @@ interface DatabaseRepository {
 
     suspend fun deleteAll()
 
-//    suspend fun getListFromFirebase() : LiveData<List<WordEntry>>
+    suspend fun getListFromFirebase() : LiveData<List<WordEntry>>
 
     suspend fun addListOfWords(words: List<WordEntry>)
 }

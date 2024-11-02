@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -11,15 +13,68 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.Task
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.firebase.auth.GoogleAuthProvider
+import com.shinjaehun.words.BuildConfig
 import com.shinjaehun.words.R
 import com.shinjaehun.words.data.db.entity.GoogleUser
-import java.lang.Exception
+import kotlinx.coroutines.coroutineScope
+import kotlin.Exception
+
+private const val TAG = "GoogleUtil"
 
 object GoogleUtil {
 
     const val TAG = "GoogleUtil"
     const val RC_GOOGLE_SIGN_IN = 9000
+
+    suspend fun signInGoogle(
+        context: Context,
+        onComplete: () -> Unit
+    ) {
+        val credentialManager: CredentialManager = CredentialManager.create(context)
+
+        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(true)
+            .setServerClientId(BuildConfig.API_KEY)
+            .setAutoSelectEnabled(true)
+            .build()
+
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
+
+        coroutineScope {
+            try {
+                val result = credentialManager.getCredential(context, request)
+                val credential = result.credential
+                if (credential is CustomCredential
+                    && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                    val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                    val c =GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
+                    val createGoogleUserResult = FirebaseUtil.auth.signInWithCredential(c)
+                    createGoogleUserResult
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.i(TAG, "signInWithCredential:success")
+                                onComplete()
+                            } else {
+                                Log.e(TAG, "signInWithCredential:failure", task.exception)
+                            }
+                        }
+                } else {
+                    Log.e(TAG, "login error with credential")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, e.toString())
+            }
+        }
+    }
+
+    fun signOutGoogle(onComplete: () -> Unit = {}) {
+        FirebaseUtil.auth.signOut()
+        onComplete()
+    }
 
 // 아무튼 이거 전부 deprecated...
 //    fun signInGoogle(

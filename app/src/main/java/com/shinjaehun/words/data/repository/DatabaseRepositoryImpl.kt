@@ -20,15 +20,15 @@ class DatabaseRepositoryImpl(
     override suspend fun addWord(word: WordEntry) = wordsDao.insert(word)
 
     override suspend fun deleteWord(word: WordEntry, isDelete: Boolean) {
-//        if (isDelete || FirebaseUtil.uid == null)
-//            wordsDao.deleteWord(word.word)
-//        else
-//            wordsDao.insert(word)
-        wordsDao.deleteWord(word.word)
+        if (isDelete || FirebaseUtil.uid == null)
+            wordsDao.deleteWord(word.word)
+        else
+            wordsDao.insert(word)
+//        wordsDao.deleteWord(word.word)
     }
 
-//    override suspend fun getListFromFirebase(): LiveData<List<WordEntry>> =
-//        FirebaseUtil.liveDataList
+    override suspend fun getListFromFirebase(): LiveData<List<WordEntry>> =
+        FirebaseUtil.liveDataList
 
     override suspend fun addListOfWords(words: List<WordEntry>) =
         wordsDao.insertList(words)

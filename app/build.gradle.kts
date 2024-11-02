@@ -1,13 +1,17 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
-
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
     namespace = "com.shinjaehun.words"
     compileSdk = 34
+
+    buildFeatures.buildConfig = true
 
     defaultConfig {
         applicationId = "com.shinjaehun.words"
@@ -15,6 +19,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+        buildConfigField("String", "API_KEY", properties.getProperty("web_client_id"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
