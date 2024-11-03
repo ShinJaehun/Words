@@ -6,6 +6,8 @@ import android.preference.PreferenceManager
 import com.shinjaehun.words.data.db.data.Constants
 import com.shinjaehun.words.internal.isOnline
 
+private const val TAG = "PreferenceProvicer"
+
 class PreferenceProvider(ctx: Context) {
     private val appContext = ctx.applicationContext
 

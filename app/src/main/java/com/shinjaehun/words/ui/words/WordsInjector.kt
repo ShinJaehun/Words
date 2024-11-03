@@ -19,7 +19,7 @@ class WordsInjector(
         return DatabaseRepositoryImpl(
             wordsDao = WordsDatabase.invoke(getApplication(), CoroutineScope(Job() + Dispatchers.Main)).wordsDao()
             // 근데 이렇게 해도 되는거 맞어?
-            // coroutinescope가 필요한 이유가 뭐야?
+            // DB 생성하는데 coroutinescope가 필요한 이유가 뭐야?
         )
     }
 

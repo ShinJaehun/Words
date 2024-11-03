@@ -110,11 +110,11 @@ class WordsFragment : ScopedFragment() {
 
         val currentWords = mViewModel.words.await()
 
-//        if (mViewModel.prefsProvider.isSyncFirstLoad &&
-//            mViewModel.prefsProvider.isFullSyncNeeded) {
-//            firestoreWords = mViewModel.firestoreWords.await()
-//            firestoreWords!!.observe(viewLifecycleOwner, mObserver)
-//        }
+        if (mViewModel.prefsProvider.isSyncFirstLoad &&
+            mViewModel.prefsProvider.isFullSyncNeeded) {
+            firestoreWords = mViewModel.firestoreWords.await()
+            firestoreWords!!.observe(viewLifecycleOwner, mObserver)
+        }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext().applicationContext)
         binding.recyclerView.adapter = mAdapter
@@ -126,6 +126,9 @@ class WordsFragment : ScopedFragment() {
                 if (words == null) return@Observer
 
                 handleList(words)
+                // 여기서 sync가 발생하는데,
+                // sync를 toggle한다고 변화가 있는 것은 아니고...
+                // logout/login하면 변경이 있음...
             }
         )
     }
@@ -165,10 +168,11 @@ class WordsFragment : ScopedFragment() {
     }
 
     private fun initRemoveWordsObserver() {
-        mObserver = Observer { word ->
-            if (word == null) return@Observer
-            Log.i(TAG, "word size: ${word.size.toString()}")
-            addListOfWords(word)
+        mObserver = Observer { words ->
+            if (words == null) return@Observer
+            Log.i(TAG, "initRemoveWordsObserver() - word: $words")
+            Log.i(TAG, "words size: ${words.size}")
+            addListOfWords(words)
             mViewModel.prefsProvider.isSyncFirstLoad = false
             binding.progressBar.visibility = View.GONE
             firestoreWords?.removeObserver(mObserver)

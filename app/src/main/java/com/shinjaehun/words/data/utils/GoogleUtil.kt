@@ -35,7 +35,8 @@ object GoogleUtil {
         val credentialManager: CredentialManager = CredentialManager.create(context)
 
         val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
+            .setFilterByAuthorizedAccounts(false)
+//            .setFilterByAuthorizedAccounts(true)
             .setServerClientId(BuildConfig.API_KEY)
             .setAutoSelectEnabled(true)
             .build()
@@ -51,7 +52,8 @@ object GoogleUtil {
                 if (credential is CustomCredential
                     && credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                     val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
-                    val c =GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
+
+                    val c = GoogleAuthProvider.getCredential(googleIdTokenCredential.idToken, null)
                     val createGoogleUserResult = FirebaseUtil.auth.signInWithCredential(c)
                     createGoogleUserResult
                         .addOnCompleteListener { task ->
@@ -66,7 +68,8 @@ object GoogleUtil {
                     Log.e(TAG, "login error with credential")
                 }
             } catch (e: Exception) {
-                Log.e(TAG, e.toString())
+                println(e)
+//                Log.e(TAG, e.toString())
             }
         }
     }

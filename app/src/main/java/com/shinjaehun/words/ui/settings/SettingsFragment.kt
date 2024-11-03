@@ -52,7 +52,8 @@ class SettingsFragment: PreferenceFragmentCompat() {
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
-        mContext = activity?.applicationContext ?: requireContext().applicationContext
+//        mContext = activity?.applicationContext ?: requireContext().applicationContext
+        mContext = requireActivity()
 
 //        mGoogleApiClient = GoogleUtil.getGoogleApiClient(requireActivity())
 //
